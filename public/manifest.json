@@ -1,0 +1,14 @@
+{
+  "name": "RepVouch DAO",
+  "description": "RepVouch DAO is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://c2bcecb4-e09b-4da3-90ef-9d32c8ef027c.vercel.app",
+  "properties": {
+    "app": {
+      "name": "RepVouch DAO",
+      "description": "RepVouch DAO is a Base Mini App built with Zara.",
+      "url": "https://c2bcecb4-e09b-4da3-90ef-9d32c8ef027c.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "RepVouch DAO",
+    "subtitle": "Built with Zara",
+    "description": "RepVouch DAO is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app",
+    "splashImageUrl": "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app/image.png",
+    "tagline": "RepVouch DAO",
+    "screenshotUrls": [
+      "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app/screenshot.png",
+      "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://c2bcecb4e09b4da390ef9d32c8ef027c-xx1q.vercel.app/api/webhook"
+  }
+}
