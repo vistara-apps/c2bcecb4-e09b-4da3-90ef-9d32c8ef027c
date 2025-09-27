@@ -2,65 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Professional Finance Theme - Navy & Gold */
-  --color-bg: hsl(220, 30%, 8%);
-  --color-fg: hsl(220, 20%, 95%);
-  --color-accent: hsl(45, 100%, 50%); /* Gold */
-  --color-primary: hsl(220, 50%, 50%);
-  --color-surface: hsl(220, 25%, 12%);
-  --color-text-primary: hsl(0, 0%, 95%);
-  --color-text-secondary: hsl(0, 0%, 75%);
-}
-
-[data-theme="celo"] {
-  --color-bg: hsl(0, 0%, 0%);
-  --color-fg: hsl(0, 0%, 100%);
-  --color-accent: hsl(45, 85%, 65%);
-  --color-primary: hsl(45, 85%, 65%);
-  --color-surface: hsl(0, 0%, 5%);
-  --color-text-primary: hsl(0, 0%, 100%);
-  --color-text-secondary: hsl(0, 0%, 80%);
-}
-
 @layer base {
-  * {
-    @apply border-gray-700;
-  }
-  
-  body {
-    @apply bg-bg text-fg font-sans antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  :root {
+    --background: 220 30% 8%;
+    --foreground: 220 20% 95%;
+    --card: 220 25% 12%;
+    --card-foreground: 220 20% 95%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 220 20% 95%;
+    --primary: 220 50% 50%;
+    --primary-foreground: 0 0% 95%;
+    --secondary: 220 25% 12%;
+    --secondary-foreground: 220 20% 95%;
+    --muted: 220 25% 12%;
+    --muted-foreground: 0 0% 75%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 220 30% 8%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 25% 20%;
+    --input: 220 25% 20%;
+    --ring: 45 100% 50%;
+    --radius: 0.5rem;
   }
 
-  html {
-    scroll-behavior: smooth;
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(220, 30%, 8%);
+    color: hsl(220, 20%, 95%);
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-surface/80 backdrop-blur-sm border border-gray-700/50 rounded-lg;
+    background-color: rgba(33, 37, 41, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(75, 85, 99, 0.5);
+    border-radius: 0.5rem;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-accent to-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:from-yellow-400 hover:to-accent transition-all duration-200 shadow-lg hover:shadow-xl;
+    background: linear-gradient(to right, hsl(45, 100%, 50%), hsl(45, 86%, 83%));
+    color: black;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(to right, hsl(45, 86%, 83%), hsl(45, 100%, 50%));
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
 
   .btn-secondary {
-    @apply bg-surface border border-accent/30 text-fg px-6 py-3 rounded-lg font-medium hover:bg-accent/10 hover:border-accent/50 transition-all duration-200;
+    background-color: hsl(220, 25%, 12%);
+    border: 1px solid rgba(75, 85, 99, 1);
+    color: hsl(220, 20%, 95%);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
   }
 
-  .metric-card {
-    @apply glass-card p-6 hover:bg-surface/90 transition-all duration-200 hover:border-accent/30;
-  }
-
-  .badge-glow {
-    @apply animate-pulse-gold;
+  .btn-secondary:hover {
+    background-color: rgba(33, 37, 41, 0.8);
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-accent to-yellow-300 bg-clip-text text-transparent;
+    background: linear-gradient(to right, hsl(45, 100%, 50%), hsl(45, 86%, 83%));
+    background-clip: text;
+    color: transparent;
+  }
+
+  .badge-glow {
+    box-shadow: 0 10px 15px -3px rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+  }
+
+  .metric-card {
+    background-color: rgba(33, 37, 41, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(75, 85, 99, 0.5);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: all 0.2s;
+  }
+
+  .metric-card:hover {
+    background-color: rgba(33, 37, 41, 0.9);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .nav-item-active {
+    background-color: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: hsl(45, 100%, 50%);
+  }
+
+  .nav-item-inactive {
+    color: hsl(0, 0%, 75%);
+  }
+
+  .nav-item-inactive:hover {
+    color: hsl(220, 20%, 95%);
+    background-color: rgba(33, 37, 41, 0.8);
   }
 }
 
@@ -69,3 +129,4 @@
     text-wrap: balance;
   }
 }
+
