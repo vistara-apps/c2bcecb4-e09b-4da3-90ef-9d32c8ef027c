@@ -1,106 +1,169 @@
 'use client';
 
 import { useState } from 'react';
-import { Home, Award, Search, Vote, Menu, X } from 'lucide-react';
-import { WalletConnector } from './WalletConnector';
+import { Home, Award, Coins, Search, Vote, Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-const navItems = [
-  { icon: Home, label: 'Dashboard', href: '/' },
-  { icon: Award, label: 'Badges', href: '/badges' },
-  { icon: Search, label: 'Opportunities', href: '/opportunities' },
-  { icon: Vote, label: 'Governance', href: '/governance' },
+interface NavigationProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+const navigationItems = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    icon: Home,
+    description: 'Overview of your reputation and activity',
+  },
+  {
+    id: 'badges',
+    label: 'Badges',
+    icon: Award,
+    description: 'Mint and manage your reputation badges',
+  },
+  {
+    id: 'staking',
+    label: 'Staking',
+    icon: Coins,
+    description: 'Stake tokens and earn rewards',
+  },
+  {
+    id: 'opportunities',
+    label: 'Opportunities',
+    icon: Search,
+    description: 'Discover exclusive opportunities',
+  },
+  {
+    id: 'governance',
+    label: 'Governance',
+    icon: Vote,
+    description: 'Participate in DAO governance',
+  },
 ];
 
-export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+export function Navigation({ activeTab, onTabChange }: NavigationProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
-      {/* Mobile Header */}
-      <div className="lg:hidden flex items-center justify-between p-4 bg-surface/80 backdrop-blur-sm border-b border-gray-700/50">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-accent to-yellow-500 rounded-lg flex items-center justify-center">
-            <Award className="w-5 h-5 text-black" />
-          </div>
-          <span className="font-bold text-lg gradient-text">RepVouch</span>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <WalletConnector variant="compact" />
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 hover:bg-surface rounded-lg transition-colors"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
+      {/* Desktop Navigation */}
+      <nav className="hidden md:block glass-card p-4">
+        <div className="space-y-2">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-bg/95 backdrop-blur-sm">
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-accent to-yellow-500 rounded-lg flex items-center justify-center">
-                  <Award className="w-5 h-5 text-black" />
-                </div>
-                <span className="font-bold text-lg gradient-text">RepVouch</span>
-              </div>
+            return (
               <button
-                onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-surface rounded-lg transition-colors"
+                key={item.id}
+                onClick={() => onTabChange(item.id)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-all duration-200 hover:bg-surface/80',
+                  isActive
+                    ? 'bg-accent/20 border border-accent/30 text-accent'
+                    : 'text-text-secondary hover:text-fg'
+                )}
               >
-                <X className="w-5 h-5" />
+                <Icon className={cn('w-5 h-5', isActive ? 'text-accent' : '')} />
+                <div className="flex-1">
+                  <div className={cn('font-medium', isActive ? 'text-accent' : '')}>
+                    {item.label}
+                  </div>
+                  <div className="text-xs text-text-secondary">
+                    {item.description}
+                  </div>
+                </div>
               </button>
+            );
+          })}
+        </div>
+      </nav>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="fixed top-4 right-4 z-50 glass-card p-2"
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </Button>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-40 bg-bg/80 backdrop-blur-sm">
+            <div className="fixed top-16 left-4 right-4 glass-card p-4">
+              <div className="space-y-2">
+                {navigationItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onTabChange(item.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={cn(
+                        'w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-all duration-200 hover:bg-surface/80',
+                        isActive
+                          ? 'bg-accent/20 border border-accent/30 text-accent'
+                          : 'text-text-secondary hover:text-fg'
+                      )}
+                    >
+                      <Icon className={cn('w-5 h-5', isActive ? 'text-accent' : '')} />
+                      <div className="flex-1">
+                        <div className={cn('font-medium', isActive ? 'text-accent' : '')}>
+                          {item.label}
+                        </div>
+                        <div className="text-xs text-text-secondary">
+                          {item.description}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            
-            <nav className="space-y-2">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 p-4 hover:bg-surface rounded-lg transition-colors"
+          </div>
+        )}
+
+        {/* Mobile Bottom Navigation */}
+        <div className="fixed bottom-0 left-0 right-0 z-30 glass-card border-t border-gray-700/50">
+          <div className="flex justify-around py-2">
+            {navigationItems.slice(0, 5).map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onTabChange(item.id)}
+                  className={cn(
+                    'flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200',
+                    isActive
+                      ? 'text-accent'
+                      : 'text-text-secondary hover:text-fg'
+                  )}
                 >
-                  <item.icon className="w-5 h-5 text-accent" />
-                  <span className="font-medium">{item.label}</span>
-                </a>
-              ))}
-            </nav>
+                  <Icon className="w-5 h-5" />
+                  <span className="text-xs font-medium">{item.label}</span>
+                </button>
+              );
+            })}
           </div>
-        </div>
-      )}
-
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:bg-surface/80 lg:backdrop-blur-sm lg:border-r lg:border-gray-700/50">
-        <div className="flex items-center gap-3 p-6 border-b border-gray-700/50">
-          <div className="w-10 h-10 bg-gradient-to-br from-accent to-yellow-500 rounded-lg flex items-center justify-center">
-            <Award className="w-6 h-6 text-black" />
-          </div>
-          <div>
-            <div className="font-bold text-lg gradient-text">RepVouch</div>
-            <div className="text-xs text-text-secondary">DAO Platform</div>
-          </div>
-        </div>
-
-        <nav className="flex-1 p-4 space-y-2">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 p-3 hover:bg-surface rounded-lg transition-colors group"
-            >
-              <item.icon className="w-5 h-5 text-accent group-hover:text-yellow-400 transition-colors" />
-              <span className="font-medium group-hover:text-fg transition-colors">{item.label}</span>
-            </a>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-gray-700/50">
-          <WalletConnector />
         </div>
       </div>
     </>
   );
 }
+
